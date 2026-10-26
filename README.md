@@ -123,9 +123,6 @@ The middle half of countries have a UN estimate between $2,039 and $20,740. Anyt
 - **A zero isn't always a zero.** Missing IMF figures were filled with the average of the World Bank and UN figures, but for 8 territories the UN figure was also 0. Their filled value is half their World Bank figure: the Isle of Man shows $43,579 against a World Bank estimate of $87,158. Replacing zeros with blanks in both columns first would fix this. The same zeros stay in the UN column after outliers are removed, which pulls that average down.
 - **Leave out totals.** The GDP table includes a "World" row, which is a total rather than a country. It shows up as its own region in the group summaries, and removing it first would keep the comparison to real countries.
 
-## 💼 Where this applies
-
-A pandas script that filters, cleans and totals a file can be rerun on next month's data and repeats exactly the same steps. That makes the work quicker to repeat and easier for a reviewer to check than manual spreadsheet edits. Spotting that a zero really means "missing", or that a total row has crept into the data, is the kind of check that matters in audit, tax and analyst work alike.
 
 ## 📁 Repository contents
 
