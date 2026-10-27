@@ -2,7 +2,7 @@
 
 **Filtering, cleaning and summarising four datasets with pandas, with charts in Matplotlib and seaborn.**
 
-Four Google Colab notebooks from Week 6 of my bootcamp, covering a small sales table, car fuel economy, penguin measurements with missing values, and GDP per capita for 223 countries and territories. Across the four, I loaded data, filtered and selected it, dealt with missing values and outliers, summarised it by group and charted it, checking along the way that the numbers made sense.
+Four Google Colab notebooks from Week 6 of my bootcamp, covering a small sales table, car fuel economy, penguin measurements with missing values, and GDP per capita for 223 countries and territories. Across the four, I loaded data, filtered and selected it, dealt with missing values and outliers, summarised it by group and charted it.
 
 This builds on the programs in my [Python basics](https://github.com/isobel-hannington/python-basics) repository from earlier in the same week.
 
@@ -57,59 +57,47 @@ This builds on the programs in my [Python basics](https://github.com/isobel-hann
 | `data/GDP_nominal_per_Capita.xlsx` | GDP per capita in US dollars for 223 countries and territories, with separate estimates from the IMF, World Bank and UN | Task 4 |
 | `data/student.xlsx` | A sample class list of 35 students: name, class, mark and gender | A class exercise in Colab (that notebook isn't included here) |
 
-The mpg data comes from US fuel economy figures and is a standard teaching dataset. The penguins file is the public Palmer Penguins dataset. The GDP data is a [Kaggle dataset](https://www.kaggle.com/datasets/rajkumarpandey02/gdp-in-usd-per-capita-income-by-country), and the notebook read a CSV copy of the same table. To rerun a notebook in Colab, upload its dataset first.
+The mpg and penguins files are standard public teaching datasets, and the GDP data is a [Kaggle dataset](https://www.kaggle.com/datasets/rajkumarpandey02/gdp-in-usd-per-capita-income-by-country). To rerun a notebook in Colab, upload its dataset first.
 
 ## 🧩 Code highlights
-
-Screenshots of code and output from my notebooks, each showing a different pandas technique.
 
 ### Selecting with `.loc` and cleaning a text column
 
 ![loc and astype](images/code-01-loc-astype-revenue.png)
 
-`.loc[:, "units_sold"]` selects every row (`:`) of the `units_sold` column and fills it with the sales figures. Prices arrived as text, such as "$10.99", so I removed the $ sign with `str.replace()` and turned the column into numbers with `astype(float)`. Revenue is then price times units, rounded to whole numbers. The USB A to USB C cable brought in $1,242, the most of the five products.
+`.loc` fills the `units_sold` column. Prices arrived as text, such as "$10.99", so `str.replace()` removed the $ sign and `astype(float)` turned them into numbers. The USB A to USB C cable brought in the most revenue: $1,242.
 
 ### Filtering with Boolean masks
 
 ![Boolean masks](images/code-02-boolean-masks.png)
 
-`str.contains('auto')` marks each car True or False, and adding up the True values counts them: 157 of the 234 cars are automatic. The same idea gives the share of subcompacts (15.0%). The fuel economy score weights city driving at 55% and highway at 45%, and the mask keeps only the 114 cars above the median score.
-
-### Checking a relationship
-
-![Correlation](images/code-03-correlation.png)
-
-`corr()` shows that cylinders and engine size both have a correlation of −0.79 with average mileage: the bigger the engine, the fewer miles per gallon.
+`str.contains('auto')` marks each car True or False, and adding up the True values counts them: 157 of the 234 cars are automatic. A mask on a fuel economy score, weighted 55% city and 45% highway, keeps the 114 cars above the median.
 
 ### Finding and dropping missing values
 
 ![Missing values](images/code-04-missing-values-dropna.png)
 
-`isna().sum()` counts the gaps in each column: 11 penguins have no sex recorded and 2 have no body measurements. `isna().mean(axis=1)` does the same for each row, and `sort_values()` puts the emptiest rows first: two rows are 62.5% empty. `dropna()` removes every row with a gap, taking the data from 344 rows to 333.
+`isna().sum()` counts the gaps in each column: 11 penguins have no sex recorded and 2 have no body measurements. `dropna()` removes every incomplete row, taking the data from 344 rows to 333.
 
 ### Summarising by group
 
 ![groupby and sort_values](images/code-05-groupby-sort-values.png)
 
-`groupby("UN_Region")` collapses the countries into regions, and `sort_values()` ranks them. Africa is lowest and Europe highest either way, but Asia and the Americas swap places between the mean and the median, because a few very wealthy countries pull the mean up.
+`groupby("UN_Region")` collapses the countries into regions and `sort_values()` ranks them. Asia and the Americas swap places between the mean and the median, because a few very wealthy countries pull the mean up.
 
 ### Filling missing values
 
 ![fillna](images/code-06-fillna.png)
 
-In this dataset a missing IMF estimate is stored as 0. `replace(0, np.nan)` marks those as missing, and `fillna()` fills each one with the average of the World Bank and UN estimates for that country. Monaco, for example, now has an IMF figure of $234,316.50.
+Missing IMF estimates were stored as 0. `replace(0, np.nan)` marks them as missing, and `fillna()` fills each one with the average of the World Bank and UN estimates. Monaco now has an IMF figure of $234,316.50.
 
 ### Removing outliers with the interquartile range
 
 ![IQR outliers](images/code-07-iqr-outliers.png)
 
-The middle half of countries have a UN estimate between $2,039 and $20,740. Anything more than 1.5 times that range above the upper quartile, $48,791.50, counts as an outlier. Filtering with `&` keeps the 196 rows inside the boundaries, so 27 outliers were removed.
+The middle half of countries have a UN estimate between $2,039 and $20,740. Anything more than 1.5 times that range above the upper quartile, $48,791.50, counts as an outlier. Filtering with `&` keeps 196 rows and removes 27.
 
 ## 📸 Charts from the GDP notebook
-
-**Average IMF estimate by region**, after missing IMF figures were filled
-
-![Regions by IMF estimate](images/gdp-regions-by-imf-estimate.png)
 
 **How closely the three sources agree:** correlations between 0.93 and 0.98
 
@@ -121,26 +109,22 @@ The middle half of countries have a UN estimate between $2,039 and $20,740. Anyt
 
 ## 📈 Results
 
-- **Fuel economy:** the most economical car is the 1999 Volkswagen New Beetle 1.9 diesel manual, at 35 mpg in town and 44 on the highway. The least economical are 4.7-litre four-wheel-drive pickups and SUVs, at 9 and 12.
+- **Fuel economy:** engine size and cylinders both have a correlation of −0.79 with average mileage. The most economical car is the 1999 Volkswagen New Beetle 1.9 diesel manual, at 35 mpg in town and 44 on the highway.
 - **Penguins:** dropping incomplete rows removes 11 of the 344 penguins, about 3% of the data.
-- **GDP per capita:** the median IMF estimate is $5,421, but the mean is $15,352. Removing outliers cuts the mean UN estimate from $17,767 to $9,415, which shows how far a few very wealthy places skew the average.
+- **GDP per capita:** the median IMF estimate is $5,421, but the mean is $15,352. Removing outliers cuts the mean UN estimate from $17,767 to $9,415.
 - **Data quality:** `UN_Year` is stored as text because one value carries a footnote marker, `[n 10]2021`.
 
 ## 🎓 Key learning outcomes
 
-- Check data types before calculating. Prices stored as text, such as "$10.99", had to be cleaned before any revenue could be worked out.
-- A zero can mean "missing". In the GDP data, missing IMF figures were stored as 0, and treating them as real values would have pulled averages down.
-- Compare the mean with the median before trusting an average. In the GDP data, a few very wealthy places pulled the mean far above the median.
-- Use a clear rule for outliers. The interquartile range set a boundary anyone can check, and it removed 27 rows.
+- Check data types before calculating. Text prices had to become numbers before revenue could be worked out.
+- A zero can mean "missing", and treating it as a real value pulls averages down.
+- Compare the mean with the median before trusting an average.
+- Use a clear rule, such as the interquartile range, to decide what counts as an outlier.
 
 ## 🧠 What I'd change
 
-- **A zero isn't always a zero.** Missing IMF figures were filled with the average of the World Bank and UN figures, but for 8 territories the UN figure was also 0. Their filled value is half their World Bank figure: the Isle of Man shows $43,579 against a World Bank estimate of $87,158. Replacing zeros with blanks in both columns first would fix this. The same zeros stay in the UN column after outliers are removed, which pulls that average down.
-- **Leave out totals.** The GDP table includes a "World" row, which is a total rather than a country. It shows up as its own region in the group summaries, and removing it first would keep the comparison to real countries.
-
-## 💼 Where this applies
-
-A pandas script that filters, cleans and totals a file can be rerun on next month's data and repeats exactly the same steps. That makes the work quicker to repeat and easier for a reviewer to check than manual spreadsheet edits. Spotting that a zero really means "missing", or that a total row has crept into the data, is the kind of check that matters in audit, tax and analyst work alike.
+- **A zero isn't always a zero.** For 8 territories the UN figure was also 0, so their filled IMF value is only half their World Bank figure: the Isle of Man shows $43,579 against a World Bank estimate of $87,158. Replacing zeros with blanks in both columns first would fix this.
+- **Leave out totals.** The GDP table includes a "World" row, which shows up as its own region in the summaries. Removing it first would keep the comparison to real countries.
 
 ## 🛠️ Tools and technologies
 
@@ -156,4 +140,4 @@ A pandas script that filters, cleans and totals a file can be rerun on next mont
 | `Data_Technician_Workbook_Week_6.docx` | My completed Week 6 workbook, with the Colab link for each notebook |
 | `notebooks/` | The four pandas notebooks, downloaded from Colab with their output saved |
 | `data/` | The datasets used in the notebooks, plus the student marks file |
-| `images/` | Screenshots of code and output from the notebooks, and three charts from the GDP notebook |
+| `images/` | Screenshots of code and output from the notebooks, and charts from the GDP notebook |
