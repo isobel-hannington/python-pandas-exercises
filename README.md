@@ -55,7 +55,7 @@ This builds on the programs in my [Python basics](https://github.com/isobel-hann
 | `data/mpg.csv` | Fuel economy for 234 cars from 1999 and 2008: manufacturer, engine size, cylinders, transmission, city and highway miles per gallon, and vehicle class | Task 2 |
 | `data/penguins.csv` | Measurements of 344 penguins of three species from the Palmer Archipelago, Antarctica, with some values missing | Task 3 |
 | `data/GDP_nominal_per_Capita.xlsx` | GDP per capita in US dollars for 223 countries and territories, with separate estimates from the IMF, World Bank and UN | Task 4 |
-| `data/student.xlsx` | A sample class list of 35 students: name, class, mark and gender | A class exercise in Colab (that notebook isn't included here) |
+| `data/student.xlsx` | A sample class list of 35 students: name, class, mark and gender | A class exercise in Colab|
 
 The mpg and penguins files are standard public teaching datasets, and the GDP data is a [Kaggle dataset](https://www.kaggle.com/datasets/rajkumarpandey02/gdp-in-usd-per-capita-income-by-country). To rerun a notebook in Colab, upload its dataset first.
 
