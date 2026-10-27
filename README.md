@@ -1,6 +1,10 @@
 # 🐼 Python pandas: exploring and cleaning data
 
-Four Google Colab notebooks from Week 6 of my bootcamp, where I used pandas to explore, clean and analyse four datasets: a small sales table, car fuel economy, penguin measurements with missing values, and GDP per capita for 223 countries and territories. I filtered and selected data with Boolean masks and `.loc`, cleaned it with `dropna()`, `fillna()` and `astype()`, summarised it with `groupby()` and `sort_values()`, and charted it with Matplotlib and seaborn.
+**Filtering, cleaning and summarising four datasets with pandas, with charts in Matplotlib and seaborn.**
+
+Four Google Colab notebooks from Week 6 of my bootcamp, covering a small sales table, car fuel economy, penguin measurements with missing values, and GDP per capita for 223 countries and territories. Across the four, I loaded data, filtered and selected it, dealt with missing values and outliers, summarised it by group and charted it, checking along the way that the numbers made sense.
+
+This builds on the programs in my [Python basics](https://github.com/isobel-hannington/python-basics) repository from earlier in the same week.
 
 ## 🔎 At a glance
 
@@ -12,9 +16,37 @@ Four Google Colab notebooks from Week 6 of my bootcamp, where I used pandas to e
 | **Type** | Course notebooks. The first three teach pandas through worked examples and end with exercises that I completed. The GDP notebook is a guided analysis that I worked through. |
 | **Colab links** | [Task 1](https://colab.research.google.com/drive/1QpG9AGITvzolcj2Q5HGzwNDDucIp6Fns?usp=sharing) · [Task 2](https://colab.research.google.com/drive/1OkaoYrETIEQQwl80lXGj9dHoVeyDl8Bo?usp=sharing) · [Task 3](https://colab.research.google.com/drive/1bvXZ8Vp_cpGCjxlsx5qphVxIzRcSMGZ-?usp=sharing) · [Task 4](https://colab.research.google.com/drive/1fun0EuyUbmDeHxVpL-9G4veBi4_Z5FyL?usp=sharing) |
 
-## 🎯 Objective
+## 💡 Skills demonstrated
 
-Use pandas to load data, filter and select it, deal with missing values and outliers, summarise it by group and chart it, and check along the way that the numbers make sense.
+**✔️ Loading and exploring**
+- `read_csv()` to load data (Tasks 2 to 4), and `to_csv()` and `to_excel()` to export it (Task 1)
+- `head()`, `tail()`, `sample()`, `shape`, `info()`, `describe()`, `dtypes`, `unique()` and `value_counts()` to check a dataset before analysing it (every notebook, most fully in the GDP one)
+
+**✔️ Selecting and filtering**
+- `.loc` to select and fill a column (Task 1)
+- Boolean masks with `str.contains()` (Task 2), combined with `&` (Task 4)
+- `nlargest()` and `nsmallest()` to find the top and bottom rows (Tasks 2 and 4)
+
+**✔️ Cleaning**
+- `str.replace()` and `astype()` to turn text prices into numbers, and `rename()` for columns (Task 1)
+- `isna()`, `dropna()` and `drop()` to find and remove missing values (Task 3)
+- `replace()` and `fillna()` to mark and fill gaps that were stored as zeros (Task 4)
+
+**✔️ Summarising**
+- `groupby()` with `mean()` and `median()`, and `sort_values()` to rank the results (Task 4)
+- `corr()` to check relationships (Tasks 2 and 4) and `quantile()` for the interquartile range (Task 4)
+
+**✔️ Visualising**
+- Histograms, a heatmap, bar charts, a scatter plot and box plots with Matplotlib and seaborn (Task 4)
+
+## 📗 Exercises covered
+
+| Notebook | What I did |
+|---|---|
+| [Task 1: DataFrames](notebooks/day4-task1-pandas-dataframes.ipynb) | Built a sales table, cleaned text prices into numbers, calculated revenue and exported the result to CSV and Excel |
+| [Task 2: fuel economy](notebooks/day4-task2-mpg-fuel-economy.ipynb) | Flagged automatic cars, worked out the share of subcompacts, built a weighted fuel economy score and filtered cars above the median |
+| [Task 3: missing values](notebooks/day4-task3-penguins-missing-values.ipynb) | Counted missing values by column and by row, then dropped incomplete rows |
+| [Task 4: GDP per capita](notebooks/day4-task4-gdp-per-capita.ipynb) | Compared three sources, summarised by region, filled missing IMF figures, drew histograms, a heatmap, bar charts and box plots, and removed outliers with the interquartile range |
 
 ## 🗂️ Data
 
@@ -26,15 +58,6 @@ Use pandas to load data, filter and select it, deal with missing values and outl
 | `data/student.xlsx` | A sample class list of 35 students: name, class, mark and gender | A class exercise in Colab (that notebook isn't included here) |
 
 The mpg data comes from US fuel economy figures and is a standard teaching dataset. The penguins file is the public Palmer Penguins dataset. The GDP data is a [Kaggle dataset](https://www.kaggle.com/datasets/rajkumarpandey02/gdp-in-usd-per-capita-income-by-country), and the notebook read a CSV copy of the same table. To rerun a notebook in Colab, upload its dataset first.
-
-## 🛠️ Approach
-
-| Notebook | What it covers | What I did |
-|---|---|---|
-| [Task 1: DataFrames](notebooks/day4-task1-pandas-dataframes.ipynb) | Creating DataFrames, adding and renaming columns, summary statistics | Built a sales table, cleaned text prices into numbers, calculated revenue and exported the result to CSV and Excel |
-| [Task 2: fuel economy](notebooks/day4-task2-mpg-fuel-economy.ipynb) | Loading a CSV, selecting columns, Boolean filters, sorting | Flagged automatic cars, worked out the share of subcompacts, built a weighted fuel economy score and filtered cars above the median |
-| [Task 3: missing values](notebooks/day4-task3-penguins-missing-values.ipynb) | Finding, counting and dropping missing values | Counted missing values by column and by row, then dropped incomplete rows |
-| [Task 4: GDP per capita](notebooks/day4-task4-gdp-per-capita.ipynb) | Exploratory analysis, filling missing values, charts and outliers | Compared three sources, summarised by region, filled missing IMF figures, drew histograms, a heatmap, bar charts and box plots, and removed outliers with the interquartile range |
 
 ## 🧩 Code highlights
 
@@ -103,26 +126,28 @@ The middle half of countries have a UN estimate between $2,039 and $20,740. Anyt
 - **GDP per capita:** the median IMF estimate is $5,421, but the mean is $15,352. Removing outliers cuts the mean UN estimate from $17,767 to $9,415, which shows how far a few very wealthy places skew the average.
 - **Data quality:** `UN_Year` is stored as text because one value carries a footnote marker, `[n 10]2021`.
 
-## 💡 Skills used
+## 🎓 Key learning outcomes
 
-**Technical**
-- Loading and exporting data: `read_csv()`, `to_csv()` and `to_excel()`
-- Exploring: `head()`, `tail()`, `sample()`, `shape`, `info()`, `describe()`, `dtypes`, `unique()` and `value_counts()`
-- Filtering and selecting: column lists, `.loc`, Boolean masks with `&`, `str.contains()`, `nlargest()` and `nsmallest()`
-- Cleaning: `isna()`, `dropna()`, `fillna()`, `replace()`, `str.replace()`, `astype()`, `rename()` and `drop()`
-- Summarising: `groupby()` with `mean()` and `median()`, `sort_values()`, `corr()` and `quantile()`
-- Visualising with Matplotlib and seaborn: histograms, a heatmap, bar charts, a scatter plot and box plots
-
-**Transferable**
-- Checking data quality before analysis, such as numbers stored as text and zeros that really mean "missing"
-- Comparing the mean with the median before trusting an average
-- Explaining each step in comments, so someone else can follow the work
+- Check data types before calculating. Prices stored as text, such as "$10.99", had to be cleaned before any revenue could be worked out.
+- A zero can mean "missing". In the GDP data, missing IMF figures were stored as 0, and treating them as real values would have pulled averages down.
+- Compare the mean with the median before trusting an average. In the GDP data, a few very wealthy places pulled the mean far above the median.
+- Use a clear rule for outliers. The interquartile range set a boundary anyone can check, and it removed 27 rows.
 
 ## 🧠 What I'd change
 
 - **A zero isn't always a zero.** Missing IMF figures were filled with the average of the World Bank and UN figures, but for 8 territories the UN figure was also 0. Their filled value is half their World Bank figure: the Isle of Man shows $43,579 against a World Bank estimate of $87,158. Replacing zeros with blanks in both columns first would fix this. The same zeros stay in the UN column after outliers are removed, which pulls that average down.
 - **Leave out totals.** The GDP table includes a "World" row, which is a total rather than a country. It shows up as its own region in the group summaries, and removing it first would keep the comparison to real countries.
 
+## 💼 Where this applies
+
+A pandas script that filters, cleans and totals a file can be rerun on next month's data and repeats exactly the same steps. That makes the work quicker to repeat and easier for a reviewer to check than manual spreadsheet edits. Spotting that a zero really means "missing", or that a total row has crept into the data, is the kind of check that matters in audit, tax and analyst work alike.
+
+## 🛠️ Tools and technologies
+
+- **pandas:** loading, filtering, cleaning and summarising the data
+- **NumPy:** `np.nan` to mark missing values
+- **Matplotlib and seaborn:** the charts in the GDP notebook
+- **Google Colab:** writing and running the notebooks, with comments explaining each step, and sharing them by link
 
 ## 📁 Repository contents
 
